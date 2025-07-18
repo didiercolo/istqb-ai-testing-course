@@ -58,7 +58,9 @@ export default function CourseLayout() {
           
           {/* Main content area */}
           <main className="flex-1">
-            {children || <Outlet />}
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+              <Outlet />
+            </div>
           </main>
         </div>
       </div>
