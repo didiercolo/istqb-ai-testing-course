@@ -48,32 +48,49 @@
     }
   </style>
   <script>
-    // Handle GitHub Pages 404 redirect
+    // Single Page Apps for GitHub Pages
     (function() {
       const basePath = '/istqb-ai-testing-course';
-      const currentPath = window.location.pathname;
+      const pathSegmentsToKeep = 0;
       
-      // If we're already at the correct base path, let the SPA handle the routing
-      if (currentPath.startsWith(basePath + '/') || currentPath === basePath) {
-        // If we're at the root, ensure we have a trailing slash
-        if (currentPath.endsWith(basePath)) {
-          window.location.href = basePath + '/';
-          return;
-        }
+      const l = window.location;
+      
+      // If this is a 404 page, redirect to the SPA with the correct path
+      if (l.pathname.includes('404.html')) {
+        l.replace(
+          l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+          basePath + 
+          '?p=/' + 
+          l.pathname.replace(/\/istqb-ai-testing-course\/404\.html$/, '').slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+          (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+          l.hash
+        );
+        return;
+      }
+      
+      // If we're already on the main page, just load the app
+      if (l.pathname === basePath + '/' || l.pathname === basePath + '/index.html') {
         loadApp();
         return;
       }
       
-      // Otherwise, redirect to the correct path
-      const newPath = basePath + 
-        (currentPath.endsWith('/') ? currentPath.slice(0, -1) : currentPath) +
-        window.location.search + 
-        window.location.hash;
+      // Otherwise, redirect to the main page with the current path as a parameter
+      const path = l.pathname.startsWith(basePath) 
+        ? l.pathname.slice(basePath.length) 
+        : l.pathname;
       
-      console.log('Redirecting to:', newPath);
-      window.location.replace(newPath);
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        basePath + 
+        '?p=/' + 
+        path.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
+      );
       
+      // Function to load the app
       function loadApp() {
+        // Create a script tag to load the app
         const script = document.createElement('script');
         script.type = 'module';
         script.src = basePath + '/assets/index.js';
