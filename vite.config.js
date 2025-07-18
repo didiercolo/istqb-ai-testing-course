@@ -52,8 +52,8 @@ export default defineConfig({
     // Ensure all assets are properly copied
     assetsInlineLimit: 0,
   },
-  // Base public path for GitHub Pages
-  base: '/istqb-ai-testing-course/',
+  // Base public path - use '/istqb-ai-testing-course/' for production, '/' for development
+  base: process.env.NODE_ENV === 'production' ? '/istqb-ai-testing-course/' : '/',
   // Optimize dependencies
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom'],
