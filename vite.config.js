@@ -10,7 +10,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig(({ command, mode }) => {
   // Set base path for GitHub Pages
   const isProduction = mode === 'production';
-  const base = isProduction ? '/istqb-ai-testing-course' : '/';
+  const base = isProduction ? '/istqb-ai-testing-course/' : '/';
   
   return {
     base,
