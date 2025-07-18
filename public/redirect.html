@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Redirecting...</title>
+  <script>
+    // Get the current path and clean it up
+    const path = window.location.pathname.replace(/^\/+|\/+$/g, '');
+    const base = '/istqb-ai-testing-course';
+    
+    // Remove the base path if present
+    const cleanPath = path.startsWith(base) 
+      ? path.slice(base.length) 
+      : path;
+    
+    // Build the new URL with the path as a parameter
+    const newUrl = `${window.location.origin}${base}/?p=/${cleanPath}${window.location.search}${window.location.hash}`;
+    
+    // Redirect to the new URL
+    window.location.replace(newUrl);
+    
+    // Fallback in case the redirect fails
+    setTimeout(() => {
+      window.location.href = newUrl;
+    }, 100);
+  </script>
+</head>
+<body>
+  <p>Redirecting... <a id="redirectLink" href="#">Click here if not redirected</a></p>
+  <script>
+    // Update the link with the correct URL
+    document.getElementById('redirectLink').href = newUrl;
+  </script>
+</body>
+</html>

@@ -23,11 +23,13 @@ export default defineConfig(({ command, mode }) => {
     plugins: [
       react(),
       tailwindcss(),
-      // Copy 404.html to the root of the build directory
+      // Copy static files for GitHub Pages routing
       {
-        name: 'copy-404',
+        name: 'copy-static-files',
         apply: 'build',
         generateBundle() {
+          // Copy 404.html
+          // Copy 404.html
           this.emitFile({
             type: 'asset',
             fileName: '404.html',
@@ -144,12 +146,20 @@ export default defineConfig(({ command, mode }) => {
           });
         }
       },
-      // Copy _redirects file for Netlify
+      // Copy static files for GitHub Pages
       viteStaticCopy({
         targets: [
           {
             src: '_redirects',
             dest: ''
+          },
+          {
+            src: 'redirect.html',
+            dest: ''
+          },
+          {
+            src: 'course/index.html',
+            dest: 'course'
           }
         ]
       })
