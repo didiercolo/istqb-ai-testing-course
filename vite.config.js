@@ -21,14 +21,52 @@ export default defineConfig(({ command, mode }) => {
     plugins: [
       react(),
       tailwindcss(),
-      viteStaticCopy({
-        targets: [
-          {
-            src: 'public/_redirects',
-            dest: ''
-          }
-        ]
-      })
+      // Copy 404.html to the root of the build directory
+      {
+        name: 'copy-404',
+        apply: 'build',
+        generateBundle() {
+          this.emitFile({
+            type: 'asset',
+            fileName: '404.html',
+            source: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISTQB AI Testing Course</title>
+  <script>
+    // Single Page Apps for GitHub Pages
+    // MIT License
+    // https://github.com/rafgraph/spa-github-pages
+    (function() {
+      const basePath = '/istqb-ai-testing-course';
+      const pathSegmentsToKeep = 0;
+      
+      const l = window.location;
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        basePath + 
+        '?p=/' + 
+        l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
+      );
+    })();
+  </script>
+</head>
+<body>
+  <div id="root">
+    <div style="text-align: center; margin-top: 2rem;">
+      <h1>Loading ISTQB AI Testing Course...</h1>
+      <p>If you're not redirected automatically, <a href="/istqb-ai-testing-course/">click here</a>.</p>
+    </div>
+  </div>
+</body>
+</html>`
+          });
+        }
+      }
     ],
     resolve: {
       alias: {

@@ -1,6 +1,6 @@
-import { StrictMode } from 'react';
+import { StrictMode, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, useLocation, useNavigate } from 'react-router-dom';
 import './index.css';
 import AppRouter from './AppRouter';
 
@@ -14,17 +14,35 @@ const basename = basePath.endsWith('/') ? basePath.slice(0, -1) : basePath;
 console.log('Base path:', basePath);
 console.log('Basename:', basename);
 
-// Handle GitHub Pages 404 redirect
-const path = window.location.pathname;
-if (path.includes('/404.html')) {
-  const newPath = path.replace('/404.html', '');
-  window.history.replaceState({}, '', newPath);
+// Component to handle initial navigation
+function InitialNavigation() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Handle the 'p' parameter for client-side routing
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirectPath = urlParams.get('p');
+    
+    if (redirectPath) {
+      // Clean up the URL
+      const cleanPath = redirectPath
+        .replace(/~and~/g, '&')
+        .replace(/%3F/g, '?')
+        .replace(/%23/g, '#');
+      
+      // Navigate to the clean path
+      navigate(cleanPath, { replace: true });
+    }
+  }, [navigate]);
+
+  return <AppRouter />;
 }
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter basename={basename}>
-      <AppRouter />
+      <InitialNavigation />
     </BrowserRouter>
   </StrictMode>
 );
