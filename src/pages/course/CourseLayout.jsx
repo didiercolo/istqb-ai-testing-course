@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { cn } from '@/lib/utils';
+import { cn } from '@lib/utils';
 
 // Using absolute paths to ensure consistency
 const navItems = [

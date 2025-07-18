@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { Button } from '@/components/ui/button.jsx'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx'
-import { Badge } from '@/components/ui/badge.jsx'
+import { Button } from '@components/ui/button.jsx'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@components/ui/card.jsx'
+import { Badge } from '@components/ui/badge.jsx'
 import { BookOpen, Clock, Users, Award, CheckCircle, Star } from 'lucide-react'
 import './App.css'
 

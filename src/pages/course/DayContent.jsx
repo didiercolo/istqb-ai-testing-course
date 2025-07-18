@@ -2,7 +2,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { useEffect, useState } from 'react';
-import { loadMarkdown, DAY_CONTENT_PATHS } from '@/utils/markdownLoader';
+import { loadMarkdown, DAY_CONTENT_PATHS } from '@utils/markdownLoader';
 
 const dayTitles = {
   1: 'Introduction to AI and AI Testing Fundamentals',

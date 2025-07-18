@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { resolve } from 'path';
 import fs from 'fs';
+import path from 'path';
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -64,6 +65,15 @@ export default defineConfig(({ mode }) => {
       'import.meta.env.DEV': !isProduction
     },
     plugins: [react(), tailwindcss()],
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './src'),
+        '@components': path.resolve(__dirname, './src/components'),
+        '@lib': path.resolve(__dirname, './src/lib'),
+        '@utils': path.resolve(__dirname, './src/utils'),
+        '@pages': path.resolve(__dirname, './src/pages'),
+      },
+    },
     server: {
       port: 5173,
       strictPort: true,
