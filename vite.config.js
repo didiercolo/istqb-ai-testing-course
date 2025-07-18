@@ -52,8 +52,8 @@ export default defineConfig({
     // Ensure all assets are properly copied
     assetsInlineLimit: 0,
   },
-  // Base public path when served in development or production
-  base: '/',
+  // Base public path for GitHub Pages
+  base: '/istqb-ai-testing-course/',
   // Optimize dependencies
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom'],
