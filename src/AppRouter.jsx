@@ -22,15 +22,22 @@ function AppRouter() {
     <>
       <ScrollToTop />
       <Routes>
-        {/* Main App */}
+        {/* Main App - Root path */}
         <Route path="/" element={<App />} />
         
         {/* Course routes */}
-        <Route path="course" element={<CourseLayout />}>
-          <Route index element={<CourseOverview />} />
-          <Route path="day/:day" element={<DayContent />} />
-          <Route path="*" element={<Navigate to="/404" replace />} />
-        </Route>
+        <Route 
+          path="/course" 
+          element={
+            <CourseLayout>
+              <Routes>
+                <Route index element={<CourseOverview />} />
+                <Route path="day/:day" element={<DayContent />} />
+                <Route path="*" element={<Navigate to="/404" replace />} />
+              </Routes>
+            </CourseLayout>
+          } 
+        />
         
         {/* 404 - Not Found */}
         <Route path="/404" element={<NotFound />} />

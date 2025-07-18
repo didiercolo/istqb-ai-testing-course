@@ -1,6 +1,7 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
+// Using absolute paths to ensure consistency
 const navItems = [
   { name: 'Course Overview', path: '/course' },
   { name: 'Day 1: Introduction', path: '/course/day/1' },
@@ -29,30 +30,35 @@ export default function CourseLayout() {
                 Course Content
               </h2>
               <nav className="space-y-1">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    className={cn(
-                      'block px-3 py-2 rounded-md text-sm font-medium',
-                      isActive(item.path)
-                        ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
-                        : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700/50',
-                      'transition-colors duration-200'
-                    )}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
+                {navItems.map((item) => {
+                  // Ensure the path is absolute
+                  const fullPath = item.path.startsWith('/') 
+                    ? item.path 
+                    : `/course/${item.path}`;
+                  
+                  return (
+                    <Link
+                      key={fullPath}
+                      to={fullPath}
+                      className={cn(
+                        'block px-3 py-2 rounded-md text-sm font-medium',
+                        isActive(fullPath)
+                          ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
+                          : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700/50',
+                        'transition-colors duration-200'
+                      )}
+                    >
+                      {item.name}
+                    </Link>
+                  );
+                })}
               </nav>
             </div>
           </aside>
-
-          {/* Main content */}
+          
+          {/* Main content area */}
           <main className="flex-1">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
-              <Outlet />
-            </div>
+            {children || <Outlet />}
           </main>
         </div>
       </div>
