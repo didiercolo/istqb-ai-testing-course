@@ -3,34 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Redirecting...</title>
+  <title>Loading...</title>
   <script>
-    // Single Page Apps for GitHub Pages
-    // MIT License
-    // https://github.com/rafgraph/spa-github-pages
+    // This script handles client-side routing for GitHub Pages
     (function() {
       const basePath = '/istqb-ai-testing-course';
+      const pathSegmentsToKeep = 0;
+      
       const l = window.location;
+      const lpath = l.pathname;
       
       // Only redirect if we're not already at the correct URL
-      if (!l.pathname.startsWith(basePath + '/')) {
-        const path = l.pathname === '/' ? '' : l.pathname;
-        const search = l.search ? l.search : '';
-        const hash = l.hash ? l.hash : '';
-        
-        // Redirect to the same path but with the base path
-        l.replace(
-          l.protocol + '//' + l.host + 
-          basePath + 
-          path + 
-          search + 
-          hash
-        );
+      if (lpath.startsWith(basePath + '/') || lpath === basePath) {
+        // Already at the correct base path, let the SPA handle the routing
+        return;
       }
+      
+      // Redirect to the same path but with the base path
+      const newPath = basePath + 
+        lpath.slice(1).split('/').slice(pathSegmentsToKeep).join('/') + 
+        l.search + 
+        l.hash;
+      
+      console.log('Redirecting to:', newPath);
+      l.replace(newPath);
     })();
   </script>
 </head>
 <body>
-  <p>Redirecting...</p>
+  <div id="root">
+    <div style="text-align: center; margin-top: 2rem;">
+      <h1>Loading Application...</h1>
+      <p>If you're not automatically redirected, please <a href="/istqb-ai-testing-course/">click here</a>.</p>
+    </div>
+  </div>
+  
+  <!-- Load the application script -->
+  <script type="module" src="/istqb-ai-testing-course/src/main.jsx"></script>
 </body>
 </html>
