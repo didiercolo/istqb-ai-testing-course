@@ -7,61 +7,60 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://vite.dev/config/
-export default defineConfig(({ command }) => ({
+export default defineConfig(({ command, mode }) => {
   // Set base path for GitHub Pages
-  base: command === 'build' ? '/istqb-ai-testing-course/' : '/',
+  const isProduction = mode === 'production';
+  const base = isProduction ? '/istqb-ai-testing-course/' : '/';
   
-  plugins: [
-    react(),
-    tailwindcss(),
-  ],
-  
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-  },
-  
-  // Ensure public files are properly served
-  publicDir: 'public',
-  
-  // Configure the development server
-  server: {
-    port: 5173,
-    strictPort: true,
-    open: true,
-    // Handle SPA fallback for client-side routing
-    historyApiFallback: true,
-    fs: {
-      // Allow serving files from one level up from the project root
-      allow: ['..']
-    },
-    proxy: {
-      // Proxy API requests if needed
-      '/api': {
-        target: 'http://localhost:3000',
-        changeOrigin: true,
+  return {
+    base,
+    plugins: [
+      react(),
+      tailwindcss(),
+    ],
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
       },
     },
-  },
-  
-  // Build configuration
-  build: {
-    outDir: 'dist',
-    assetsDir: 'assets',
-    sourcemap: true,
-    // Handle SPA fallback for client-side routing in production
-    rollupOptions: {
-      output: {
-        manualChunks: undefined,
+    // Ensure public files are properly served
+    publicDir: 'public',
+    // Configure the development server
+    server: {
+      port: 5173,
+      strictPort: true,
+      open: true,
+      // Handle SPA fallback for client-side routing
+      historyApiFallback: true,
+      fs: {
+        // Allow serving files from one level up from the project root
+        allow: ['..']
+      },
+      proxy: {
+        // Proxy API requests if needed
+        '/api': {
+          target: 'http://localhost:3000',
+          changeOrigin: true,
+        },
       },
     },
-    // Ensure all assets are properly copied
-    assetsInlineLimit: 0,
-  },
-  
-  // Optimize dependencies
-  optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom'],
-  },
-}));
+    // Build configuration
+    build: {
+      outDir: 'dist',
+      assetsDir: 'assets',
+      sourcemap: true,
+      // Handle SPA fallback for client-side routing in production
+      rollupOptions: {
+        output: {
+          manualChunks: undefined,
+        },
+      },
+      // Ensure all assets are properly copied
+      assetsInlineLimit: 0,
+    },
+    // Optimize dependencies
+    optimizeDeps: {
+      include: ['react', 'react-dom', 'react-router-dom'],
+    },
+  };
+});
