@@ -7,18 +7,24 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ command }) => ({
+  // Set base path for GitHub Pages
+  base: command === 'build' ? '/istqb-ai-testing-course/' : '/',
+  
   plugins: [
     react(),
     tailwindcss(),
   ],
+  
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  
   // Ensure public files are properly served
   publicDir: 'public',
+  
   // Configure the development server
   server: {
     port: 5173,
@@ -38,6 +44,7 @@ export default defineConfig({
       },
     },
   },
+  
   // Build configuration
   build: {
     outDir: 'dist',
@@ -52,10 +59,9 @@ export default defineConfig({
     // Ensure all assets are properly copied
     assetsInlineLimit: 0,
   },
-  // Base public path - use '/istqb-ai-testing-course/' for production, '/' for development
-  base: process.env.NODE_ENV === 'production' ? '/istqb-ai-testing-course/' : '/',
+  
   // Optimize dependencies
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom'],
   },
-});
+}));
