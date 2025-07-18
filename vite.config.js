@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -20,6 +21,14 @@ export default defineConfig(({ command, mode }) => {
     plugins: [
       react(),
       tailwindcss(),
+      viteStaticCopy({
+        targets: [
+          {
+            src: 'public/_redirects',
+            dest: ''
+          }
+        ]
+      })
     ],
     resolve: {
       alias: {
@@ -52,7 +61,10 @@ export default defineConfig(({ command, mode }) => {
       outDir: 'dist',
       assetsDir: 'assets',
       sourcemap: true,
-      // Handle SPA fallback for client-side routing in production
+      // Copy _redirects file to the root of the build directory
+      copyPublicDir: true,
+      // Ensure _redirects is copied to the root
+      copyStaticFrom: 'public',
       rollupOptions: {
         output: {
           manualChunks: undefined,
